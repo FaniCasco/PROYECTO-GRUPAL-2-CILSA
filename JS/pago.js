@@ -17,30 +17,36 @@ function clearCart() {
     localStorage.removeItem('cart'); // Vaciar el carrito en el localStorage
 }
 
+// Función para mostrar mensaje de pago con SweetAlert2
+function showPaymentMessage(message, icon) {
+    Swal.fire({
+        title: '¡Pedido confirmado!',
+        text: message,
+        icon: icon,  // Puedes usar 'success', 'info', 'warning', etc.
+        background: '#fff4e0',  // Un tono cálido para comida rápida
+        confirmButtonColor: '#e94e77',  // Un rojo vibrante para simular ketchup
+        timer: 3000,
+        timerProgressBar: true,
+        backdrop: `
+            rgba(0,0,123,0.4)
+            url("/IMG/hamburguesa.gif")  // Añade una imagen de fondo divertida relacionada
+            left top
+            no-repeat
+        `
+    });
+}
+
 // Pagar con tarjeta
 document.getElementById('card-payment').addEventListener('click', () => {
-    // Mostrar mensaje de pago con tarjeta
-    showPaymentMessage("Pago realizado con éxito. En unos momentos le estaremos enviando el pedido.");
-
-    // Vaciar el carrito
+    showPaymentMessage("Pago realizado con éxito. ¡Tu pedido está en camino!", 'success');
     clearCart();
-
-    // Redirigir a la página de inicio después de 3 segundos
-    setTimeout(() => {
-        window.location.href = 'index.html';
-    }, 3000); // 3 segundos de retraso para que el usuario pueda ver el mensaje
+    setTimeout(() => window.location.href = 'index.html', 3000);
 });
 
 // Pagar en efectivo
 document.getElementById('cash-payment').addEventListener('click', () => {
-    // Mostrar mensaje de pago en efectivo
-    showPaymentMessage(`Gracias por su compra. Deberá abonarle al repartidor la cantidad de $${total}.`);
-
-    // Vaciar el carrito
+    showPaymentMessage(`Gracias por tu compra. Deberás pagar al repartidor $${total}.`, 'info');
     clearCart();
-
-    // Redirigir a la página de inicio después de 3 segundos
-    setTimeout(() => {
-        window.location.href = 'index.html';
-    }, 3000); // 3 segundos de retraso para que el usuario pueda ver el mensaje
+    setTimeout(() => window.location.href = 'index.html', 3000);
 });
+
